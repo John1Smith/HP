@@ -1,0 +1,1 @@
+json.partial! "seasonproducts/seasonproduct", seasonproduct: @seasonproduct

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @doshaproduct.product_id %>
+</p>
+
+<p>
+  <strong>Dosha:</strong>
+  <%= @doshaproduct.dosha_id %>
+</p>
+
+<%= link_to 'Edit', edit_doshaproduct_path(@doshaproduct) %> |
+<%= link_to 'Back', doshaproducts_path %>

@@ -1,0 +1,23 @@
+<%= form_for(@seasonproduct) do |f| %>
+  <% if @seasonproduct.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@seasonproduct.errors.count, "error") %> prohibited this seasonproduct from being saved:</h2>
+
+      <ul>
+      <% @seasonproduct.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.select :product_id, Product.all.collect { |p| [ p.name, p.id ] } %>
+  </div>
+  <div class="field">
+   <%= f.select :season_id, Season.all.collect { |p| [ p.name, p.id ] } %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

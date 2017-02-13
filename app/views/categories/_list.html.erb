@@ -1,0 +1,25 @@
+<% unless smart_listing.empty? %>
+  <table class="table table-striped">
+    <thead>
+      <th class="col-md-3">
+        <%= "Name" %>
+      </th>
+      <th class="col-md-3">
+        <%= "Description" %>
+      </th>
+      
+      
+    </thead>
+    <tbody>
+      <% smart_listing.collection.each do |category| %>
+        <tr>
+           <td><%= category.name %></td>
+           <td><%= category.desc %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+ <% else %>
+  <p class="warning">No records!</p>
+<% end %>
+

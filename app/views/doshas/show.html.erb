@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @dosha.name %>
+</p>
+
+<p>
+  <strong>Desc:</strong>
+  <%= @dosha.desc %>
+</p>
+
+<%= link_to 'Edit', edit_dosha_path(@dosha) %> |
+<%= link_to 'Back', doshas_path %>

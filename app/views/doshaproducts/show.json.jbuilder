@@ -1,0 +1,1 @@
+json.partial! "doshaproducts/doshaproduct", doshaproduct: @doshaproduct

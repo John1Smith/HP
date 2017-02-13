@@ -1,0 +1,1 @@
+json.partial! "receipeproducts/receipeproduct", receipeproduct: @receipeproduct

@@ -1,0 +1,1 @@
+json.array! @doshaproducts, partial: 'doshaproducts/doshaproduct', as: :doshaproduct

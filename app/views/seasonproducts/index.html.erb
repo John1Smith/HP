@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Seasonproducts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Season</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @seasonproducts.each do |seasonproduct| %>
+      <tr>
+        <td><%= seasonproduct.product.name %></td>
+        <td><%= seasonproduct.season.name %></td>
+        <td><%= link_to 'Show', seasonproduct %></td>
+        <td><%= link_to 'Edit', edit_seasonproduct_path(seasonproduct) %></td>
+        <td><%= link_to 'Destroy', seasonproduct, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Seasonproduct', new_seasonproduct_path %>

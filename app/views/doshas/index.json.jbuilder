@@ -1,0 +1,1 @@
+json.array! @doshas, partial: 'doshas/dosha', as: :dosha

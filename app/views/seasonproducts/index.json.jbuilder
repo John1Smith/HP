@@ -1,0 +1,1 @@
+json.array! @seasonproducts, partial: 'seasonproducts/seasonproduct', as: :seasonproduct

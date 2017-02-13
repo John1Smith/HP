@@ -1,0 +1,27 @@
+<%= form_for(@receipeproduct) do |f| %>
+  <% if @receipeproduct.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@receipeproduct.errors.count, "error") %> prohibited this receipeproduct from being saved:</h2>
+
+      <ul>
+      <% @receipeproduct.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.select :product_id, Product.all.collect { |p| [ p.name, p.id ] } %>
+  </div>
+  <div class="field">
+   <%= f.select :receipe_id, Receipe.all.collect { |p| [ p.name, p.id ] } %>
+  </div>
+  <div class="field">
+    <%= f.label :quantity %><br>
+    <%= f.number_field :quantity %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
