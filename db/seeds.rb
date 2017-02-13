@@ -6,11 +6,15 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-DELETE_ALL_PROD  = false
-DELETE_ALL_CAT   = false
-DELETE_ALL_DOSHA = false
+
+
+DELETE_ALL_PROD   = false
+DELETE_ALL_CAT    = false
+DELETE_ALL_DOSHA  = false
 DELETE_ALL_SEASON = false
-DELETE_ALL_COMP = true
+DELETE_ALL_COMP   = false
+
+DELETE_ALL_PROD_COMP = false
 
 
 def gen_prod
@@ -99,8 +103,63 @@ def gen_comp
 	end
 	
 end
+
+# Соответствия Product Composition 
+def gen_prod_comp
+	file = File.read("#{Rails.root}/public/p11.json")
+	data_hash = JSON.parse(file)
+
+	if DELETE_ALL_PROD_COMP
+		Compositionproduct.delete_all
+	end	
+	data_hash.each do |prod|
+
+		product = Product.find_by_name prod['name']
+		# binding.pry
+		comps   = prod['include100g']
+		p product.name
+
+		comps.each do |comp|
+			composition = Composition.find_by_name(comp['name'])
+			p "             name: #{composition.name}"
+			p "             unit: #{composition.unit}"
+			# p "quantity: #{composition.quantity}"
+			# p "href: #{composition.href}"
+
+			cp = Compositionproduct.new
+			cp.product     = product
+			cp.composition = composition
+			cp.quantity    = comp['quantity']
+			cp.save
+		end
+
+	end
+	
+end
+
+def gen_repl_path
+	file1 = File.read("#{Rails.root}/public/p11.json")
+	file2 = File.read("#{Rails.root}/public/images/imgs_all.json")
+	data_hash1 = JSON.parse(file1)
+    data_hash2 = JSON.parse(file2)
+
+	data_hash2.each do |prod|
+		product = Product.find_by_name prod['name']
+		img_path = "#{Rails.root}/public/images/#{prod['file_name']}"
+		product.img_url = prod['file_name']
+		product.save
+
+		p "#{product.name} : #{product.img_url}"
+		# p prod['name'] 
+	end
+	
+end
 # gen_prod
 # gen_cat
 # gen_dosha
 # gen_season
-gen_comp
+# gen_comp
+
+# gen_prod_comp
+
+gen_repl_path

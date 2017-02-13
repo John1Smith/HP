@@ -1,10 +1,16 @@
 class ProductsController < ApplicationController
+  include SmartListing::Helper::ControllerExtensions
+    helper  SmartListing::Helper
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
+    products_scope = Product.all
+  if params[:filter]!=""
+    products_scope = products_scope.where("name LIKE ?", "%#{params[:filter]}%") 
+  end
+  @products = smart_listing_create :products, products_scope, partial: "products/list"
   end
 
   # GET /products/1

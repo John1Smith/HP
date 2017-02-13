@@ -27,7 +27,10 @@ gem "twitter-bootstrap-rails"
 
 gem "smart_listing"
 
-gem 'slim'
+gem "slim-rails"
+
+gem 'pry-byebug'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
