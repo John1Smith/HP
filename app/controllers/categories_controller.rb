@@ -3,16 +3,18 @@ class CategoriesController < ApplicationController
     helper  SmartListing::Helper
   before_action :set_category, only: [:show, :edit, :update, :destroy]
 
+  skip_before_filter :verify_authenticity_token  
+
+  # curl http://localhost:3000/categories.json
   # GET /categories
   # GET /categories.json
   def index
-  categories_scope = Category.all
-  if params[:filter]!=""
-    categories_scope = categories_scope.where("name LIKE ?", "%#{params[:filter]}%") 
-  end
-  @categories = smart_listing_create :categories, categories_scope, partial: "categories/list"
+    categories_scope = Category.all
+    categories_scope = categories_scope.where("name LIKE ?", "%#{params[:filter]}%") if params[:filter] 
+
+
     # @categories = Category.all
-   # smart_listing_create :categories, Category.all, partial: "categories/list"
+   smart_listing_create :categories, categories_scope, partial: "categories/list", page_sizes: [100]
   end
 
   # GET /categories/1
@@ -28,12 +30,13 @@ class CategoriesController < ApplicationController
   # GET /categories/1/edit
   def edit
   end
-
+ 
+  # curl http://localhost:3000/categories.json -X POST -H 'Content-type: application/json' -d '{"name":"Специи","desc":"very"}'
   # POST /categories
   # POST /categories.json
   def create
     @category = Category.new(category_params)
-
+    # binding.pry
     respond_to do |format|
       if @category.save
         format.html { redirect_to @category, notice: 'Category was successfully created.' }
@@ -44,7 +47,8 @@ class CategoriesController < ApplicationController
       end
     end
   end
-
+ 
+  # curl http://localhost:3000/categories/21.json -X PUT -H 'Content-type: application/json' -d '{"name":"RtyСпеции"}'  
   # PATCH/PUT /categories/1
   # PATCH/PUT /categories/1.json
   def update
@@ -59,6 +63,7 @@ class CategoriesController < ApplicationController
     end
   end
 
+  # curl http://localhost:3000/categories/21.json -X DELETE -H 'Content-type: application/json'   
   # DELETE /categories/1
   # DELETE /categories/1.json
   def destroy
@@ -80,3 +85,5 @@ class CategoriesController < ApplicationController
       params.require(:category).permit(:name, :desc)
     end
 end
+
+ 

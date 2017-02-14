@@ -1,0 +1,9 @@
+.container
+	.row
+	  .col-sm-6.col-md-12
+	      .caption
+	        h3 = @composition.name
+	        p = @composition.desc
+	        p
+	          = link_to 'Edit', edit_composition_path(@composition), class: 'btn btn-primary'
+	          = link_to 'Back', compositions_path, class: 'btn btn-default'

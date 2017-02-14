@@ -1,16 +1,37 @@
 class ProductsController < ApplicationController
   include SmartListing::Helper::ControllerExtensions
     helper  SmartListing::Helper
+
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   # GET /products
   # GET /products.json
   def index
+    @comps = Composition.all
+    @product = Product.new
+
     products_scope = Product.all
-  if params[:filter]!=""
-    products_scope = products_scope.where("name LIKE ?", "%#{params[:filter]}%") 
+    products_scope = products_scope.where("name LIKE ?", "%#{params[:filter]}%")  if params[:filter]
+    @products = smart_listing_create :products, products_scope, partial: "products/list",  page_sizes: [500]
   end
-  @products = smart_listing_create :products, products_scope, partial: "products/list"
+
+  def filter
+    composition_id = params[:product][:compositions]
+    p "ID:#{composition_id}"
+
+    # binding.pry
+
+    @comp = Composition.find(composition_id) if composition_id
+
+    @comps = Composition.all
+    @product = Product.new
+
+    products = @comp.products
+    products_scope = products.order('compositionproducts.quantity desc')
+    # products_scope = @comp.products
+       
+    @products = smart_listing_create :products, products_scope, partial: "products/list",  page_sizes: [100]
+    render 'index'
   end
 
   # GET /products/1
